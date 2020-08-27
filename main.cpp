@@ -23,7 +23,10 @@ int main (void)
     int32_t position;
     int32_t velocity;
     int32_t current;
-    motorShield.motorAWrite(0, 0); //turn motor A off, motorShield.motorAWrite(DUTY CYCLE, DIRECTION), DIRECTION = 0 is forward 
+    motorShield.motorAWrite(0, 0); //turn motor A off
+    
+    //use the motor shield as follows:
+    //motorShield.motorAWrite(DUTY CYCLE, DIRECTION), DIRECTION = 0 is forward, DIRECTION =1 is backwards. 
 
     // Run experiment for 10 seconds
     while( t.read() < 10 ) {
@@ -35,11 +38,11 @@ int main (void)
                         
         position = encoderA.getPulses(); //read position in ticks of the encoder
         velocity = encoderA.getVelocity(); //read position in ticks per second of the encoder 
-        current = motorShield.readCurrentA(); //read current in raw 16 bit ADC counts
+        current = motorShield.readCurrentA(); //read current for motor A in raw 16 bit ADC counts
         
         pc.printf("Current reading: %i, Velocity: %i, Angle: %i \n\r", current, velocity, position);
         
-        wait(.01); //run control loop at 10Hz
+        wait(.01); //run control loop at 100Hz
     }
 
     motorShield.motorAWrite(0, 0); //turn motor A off
