@@ -20,9 +20,9 @@ int main (void)
     t.reset();
     t.start();
     encoderA.reset();
-    int32_t position;
-    int32_t velocity;
-    int32_t current;
+    float position;
+    float velocity;
+    float current;
     motorShield.motorAWrite(0, 0); //turn motor A off
     
     //use the motor shield as follows:
@@ -40,7 +40,7 @@ int main (void)
         velocity = 0; //MODIFY THIS
         current = motorShield.readCurrentA()*(30.0/65536.0)-15; //read current for motor A in amps. Note: this is a slightly different current sensor so its a different conversion than last lab.
         
-        pc.printf("Current reading: %i Amps, Velocity: %i, Angle: %i \n\r", current, velocity, position);
+        pc.printf("Current reading: %f Amps, Velocity: %f, Angle: %f \n\r", current, velocity, position);
         
         wait(.01); //run control loop at 100Hz
     }
