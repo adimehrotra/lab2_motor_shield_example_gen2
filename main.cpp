@@ -36,11 +36,11 @@ int main (void)
         else
             motorShield.motorAWrite(0.5, 1); //run motor A at 50% duty cycle and in the reverse direction for 5 seconds
                         
-        position = encoderA.getPulses(); //read position in ticks of the encoder
-        velocity = encoderA.getVelocity(); //read position in ticks per second of the encoder 
-        current = motorShield.readCurrentA(); //read current for motor A in raw 16 bit ADC counts
+        position = 0; //MODIFY THIS
+        velocity = 0; //MODIFY THIS
+        current = motorShield.readCurrentA()*(30.0/65536.0)-15; //read current for motor A in amps. Note: this is a slightly different current sensor so its a different conversion than last lab.
         
-        pc.printf("Current reading: %i, Velocity: %i, Angle: %i \n\r", current, velocity, position);
+        pc.printf("Current reading: %i Amps, Velocity: %i, Angle: %i \n\r", current, velocity, position);
         
         wait(.01); //run control loop at 100Hz
     }
