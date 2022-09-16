@@ -12,7 +12,7 @@ QEI encoderB(PA_5, PB_3, NC, 1200, QEI::X4_ENCODING);  // MOTOR B ENCODER (no in
 QEI encoderC(PC_6, PC_7, NC, 1200, QEI::X4_ENCODING);  // MOTOR C ENCODER (no index, 1200 counts/rev, Quadrature encoding)
 QEI encoderD(PD_12, PD_13, NC, 1200, QEI::X4_ENCODING);// MOTOR D ENCODER (no index, 1200 counts/rev, Quadrature encoding)
 
-MotorShield motorShield(12000); //initialize the motor shield with a PWM period of 12000 ticks or ~20kHZ
+MotorShield motorShield(48000); //initialize the motor shield with a PWM period of 48000 ticks or ~5kHZ
 
 int main (void)
 {    
@@ -24,6 +24,7 @@ int main (void)
     float velocity;
     float current;
     motorShield.motorAWrite(0, 0); //turn motor A off
+    pc.baud(115200);
     
     //use the motor shield as follows:
     //motorShield.motorAWrite(DUTY CYCLE, DIRECTION), DIRECTION = 0 is forward, DIRECTION =1 is backwards. 
@@ -31,10 +32,14 @@ int main (void)
     // Run experiment for 10 seconds
     while( t.read() < 10 ) {
         // Perform control loop logic
-        if (t.read() < 5)
+        if (t.read() < 5) {
             motorShield.motorAWrite(0.5, 0); //run motor A at 50% duty cycle and in the forward direction for 5 seconds
-        else
+            pc.printf("One way..."); //debugging line
+        }
+        else {
             motorShield.motorAWrite(0.5, 1); //run motor A at 50% duty cycle and in the reverse direction for 5 seconds
+            pc.printf("Or anaathaaa..."); //debugging line
+        }
                         
         position = 0; //MODIFY THIS
         velocity = 0; //MODIFY THIS
@@ -46,6 +51,7 @@ int main (void)
     }
 
     motorShield.motorAWrite(0, 0); //turn motor A off
+    pc.printf("(I'm gonna get ya, get ya, get ya, get ya) \n\r"); //ignore this line of code
     
     while(1) {
         //loop forever
